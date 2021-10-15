@@ -22,7 +22,6 @@ def train_UGAC(
     num_epochs=10,
     init_lr=1e-5,
     ckpt_path='../ckpt/ugac',
-    noise_sigma = 0.1,
     list_of_hp = [1, 0.015, 0.01, 0.001, 1, 0.015, 0.01, 0.001, 0.05, 0.05, 0.01],
 ):
     netG_A.to(device)
@@ -53,7 +52,6 @@ def train_UGAC(
             xA, xB = batch[0].to(device).type(dtype), batch[1].to(device).type(dtype)
             #
             xA_orig = xA.clone().detach()
-            xA += noise_sigma*torch.randn_like(xA)
             fake_A, fake_alpha_A, fake_beta_A = netG_B(xB)
             fake_B, fake_alpha_B, fake_beta_B = netG_A(xA)    
             ####
