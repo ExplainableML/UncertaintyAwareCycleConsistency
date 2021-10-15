@@ -81,17 +81,17 @@ netG_A, netD_A, netG_B, netD_B = train_UGAC(
     list_of_hp = [1, 0.015, 0.01, 0.001, 1, 0.015, 0.01, 0.001, 0.05, 0.05, 0.01],
 )
 ```
-This will save checkpoints in `../ckpt/` named as `ugac_eph*.pth`. The arguement `list_of_hp` is a list of all the hyper-parameters representing weights of different weigths in the loss function.
+This will save checkpoints in `ckpt/` named as `ugac_eph*.pth`. The arguement `list_of_hp` is a list of all the hyper-parameters representing weights of different weigths in the loss function.
 
-Apart from the code in this repository, we also use the code from many other repositories like this, this, and this.
+Apart from the code in this repository, we also use the code from many other repositories like [this](https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix), [this](https://github.com/taey16/pix2pixBEGAN.pytorch), and [this](https://github.com/aitorzip/PyTorch-CycleGAN).
 
 ### Bibtex
 If you find the bits from this project helpful, please cite the following works:
-```
+<!-- ```
 @article{upadhyay2021uncertainty,
   title={Robustness via Uncertainty-aware Cycle Consistency},
   author={Upadhyay, Uddeshya and Chen, Yanbei and Akata, Zeynep},
   journal={arXiv preprint arXiv:2102.11747},
   year={2021}
 }
-```
+``` -->
