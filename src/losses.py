@@ -1,65 +1,65 @@
-# from skimage.measure import compare_ssim as ssim
-# from skimage.measure import compare_psnr as psnr
+from skimage.measure import compare_ssim as ssim
+from skimage.measure import compare_psnr as psnr
 import torch
 import numpy as np
 from matplotlib import pyplot as plt
 import scipy.ndimage.filters as fi
 import matplotlib.pyplot as plt
 
-# def compare_ssim(imgRef, imgT, K1=0.01, K2=0.03):
-#     r = ssim(imgRef, imgT, data_range=imgT.max() - imgT.min(), multichannel=True, K1=K1, K2=K2)
-#     return r
+def compare_ssim(imgRef, imgT, K1=0.01, K2=0.03):
+    r = ssim(imgRef, imgT, data_range=imgT.max() - imgT.min(), multichannel=True, K1=K1, K2=K2)
+    return r
 
-# def compare_psnr(imgRef, imgT):
-#     r = psnr(imgRef, imgT, data_range=imgT.max() - imgT.min())
-#     return r
+def compare_psnr(imgRef, imgT):
+    r = psnr(imgRef, imgT, data_range=imgT.max() - imgT.min())
+    return r
 
-# def compare_rrmse(imgRef, imgT):
-#     numerator = (imgRef-imgT)**2
-#     numerator = np.mean(numerator.flatten())
+def compare_rrmse(imgRef, imgT):
+    numerator = (imgRef-imgT)**2
+    numerator = np.mean(numerator.flatten())
     
-#     denominator = (imgRef)**2
-#     denominator = np.mean(denominator.flatten())
+    denominator = (imgRef)**2
+    denominator = np.mean(denominator.flatten())
     
-#     r = numerator/denominator
-#     r = np.sqrt(r)
-#     return r
+    r = numerator/denominator
+    r = np.sqrt(r)
+    return r
 
-# def compare_qilv(I, I2, Ws=0.0, K1=0.01, K2=0.03):
-#     C1 = K1**2
-#     C2 = K2**2
+def compare_qilv(I, I2, Ws=0.0, K1=0.01, K2=0.03):
+    C1 = K1**2
+    C2 = K2**2
 
-#     kernsize=11
-#     kernstd = 1.5
-#     if Ws==0:
-#         window = np.zeros((kernsize, kernsize))
-#         window[kernsize//2, kernsize//2]=1
-#         window = fi.gaussian_filter(window, kernstd)
-#     window = window/np.sum(window)
+    kernsize=11
+    kernstd = 1.5
+    if Ws==0:
+        window = np.zeros((kernsize, kernsize))
+        window[kernsize//2, kernsize//2]=1
+        window = fi.gaussian_filter(window, kernstd)
+    window = window/np.sum(window)
     
-#     chs = I.shape[2]
-#     idxs = []
-#     for ch in range(chs):
-#         M1 = fi.convolve(I[:,:,ch], window)
-#         M2 = fi.convolve(I2[:,:,ch], window)
-#         Isq = I**2
-#         I2sq = I2**2
-#         V1 = fi.convolve(Isq[:,:,ch], window) - M1**2
-#         V2 = fi.convolve(I2sq[:,:,ch], window) - M2**2
+    chs = I.shape[2]
+    idxs = []
+    for ch in range(chs):
+        M1 = fi.convolve(I[:,:,ch], window)
+        M2 = fi.convolve(I2[:,:,ch], window)
+        Isq = I**2
+        I2sq = I2**2
+        V1 = fi.convolve(Isq[:,:,ch], window) - M1**2
+        V2 = fi.convolve(I2sq[:,:,ch], window) - M2**2
 
-#         m1 = np.mean(V1)
-#         m2 = np.mean(V2)
-#         s1 = np.std(V1)
-#         s2 = np.std(V2)
-#         s12 = np.mean((V1-m1)*(V2-m2))
+        m1 = np.mean(V1)
+        m2 = np.mean(V2)
+        s1 = np.std(V1)
+        s2 = np.std(V2)
+        s12 = np.mean((V1-m1)*(V2-m2))
 
-#         ind1 = (2*m1*m2+C1)/(m1**2+m2**2+C1)
-#         ind2 = (2*s1*s2+C2)/(s1**2+s2**2+C2)
-#         ind3 = (s12+C2/2)/(s1*s2+C2/2)
+        ind1 = (2*m1*m2+C1)/(m1**2+m2**2+C1)
+        ind2 = (2*s1*s2+C2)/(s1**2+s2**2+C2)
+        ind3 = (s12+C2/2)/(s1*s2+C2/2)
         
-#         idxs.append(ind1*ind2*ind3)
+        idxs.append(ind1*ind2*ind3)
 
-#     return np.mean(idxs)
+    return np.mean(idxs)
 
 def bayeLq_loss(out_mean, out_log_var, target, q=2, k1=1, k2=1):
     var_eps = 1e-5
