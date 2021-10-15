@@ -28,10 +28,34 @@ root
 ```
 
 ### Preparing Datasets
-The experiments of the paper used T1 MRI scans from the IXI dataset and a proprietary PET/CT dataset.
+To prepare your datasets to use with this repo, place the root directory of the dataset in `data/`.
+The recommended way to structure your data is shown below.
+```
+data/
+    |-Dataset_1/
+        |-A/
+            |-image1.png
+            |-image2.png
+            |-image3.png
+            |-...
+        |-B/
+            |-image1.png
+            |-image2.png
+            |-image3.png
+            |-...
+```
+Note the images need not be paired. The python script `src/ds.py` provides the PyTorch `Dataset` class to read such a dataset, used as explained below.
+```python
+class Images_w_nameList(data.Dataset):
+    '''
+    can act as supervised or un-supervised based on flists
+    '''
+    def __init__(self, root1, root2, flist1, flist2, transform=None):
+```
+Here `root1` and `root2` represents the root directory for domain A and B, respectively.
+`flist1` and `flist2` contain image names for domain A and domain B. Note, if `flist1` and `flist2` are aligned then dataset will load paired images. To use it as unsupervised dataset loader ensure that `flist1` and `flist2` are not aligned.
 
-`data/IXI/` has jupyter notebooks and scripts to prepare the data for motion correction (`data/IXI/prepare_motion_correction_data.py` and `data/IXI/viz_motion_correction_data.ipynb`) as well as undersampled MRI reconstruction (`data/IXI/viz_kspace_undersample_data.ipynb`).
-For custom datasets, use the above notebooks as example to prepare the dataset and place them under `data/`. The dataset class in `src/ds.py` loads the paired set of images (corrupted and the non-corrupted version).
+
 
 ### Learning models with uncertainty
 `src/networks.py` provides the generator and discriminator architectures.
