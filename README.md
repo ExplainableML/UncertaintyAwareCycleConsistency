@@ -1,5 +1,5 @@
 # UncertaintyAwareCycleConsistency
-This repository provides the building blocks and the API for the work presented in the NeurIPS'21 paper
+This repository provides the building blocks and the API for the work presented in the **NeurIPS'21** paper
 [Robustness via Uncertainty-aware Cycle Consistency]().
 Translation methods often learn deterministic mappings without explicitly modelling the robustness to outliers or predictive uncertainty, leading to performance degradation when encountering unseen perturbations at test time. To address this, we propose a method based on Uncertainty-aware Generalized Adaptive Cycle Consistency (UGAC), which models the per-pixel residual by generalized Gaussian distribution, capable of modelling heavy-tailed distributions.
 
